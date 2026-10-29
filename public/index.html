@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Factory Traffic Control Dashboard - Junction A</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+    <div class="header">
+        <div>
+            <h2>Factory Traffic Control</h2>
+            <div class="subtitle">Intersection A - Autonomous Event-Driven Signal Controller</div>
+        </div>
+        <div class="header-badges">
+            <span id="badge-mode" class="badge badge-mode">AUTOMATIC</span>
+            <span id="badge-ctrl" class="badge badge-online">CONTROLLER: ONLINE</span>
+        </div>
+    </div>
+
+    <div class="grid">
+        <!-- Visual Intersection View -->
+        <div class="card">
+            <h3>Live Physical Intersection</h3>
+            <div class="phase-indicator">
+                Active Phase: <strong id="val-phase">-</strong>
+            </div>
+
+            <div class="intersection-container">
+                <div class="road-h"></div>
+                <div class="road-v"></div>
+
+                <!-- Queue Counts -->
+                <div id="badge-qN" class="queue-tag q-north">Q: 0</div>
+                <div id="badge-qS" class="queue-tag q-south">Q: 0</div>
+                <div id="badge-qW" class="queue-tag q-west">Q: 0</div>
+                <div id="badge-qE" class="queue-tag q-east">Q: 0</div>
+
+                <!-- NORTH LIGHT -->
+                <div class="traffic-light tl-north">
+                    <div id="N-RED" class="lamp"></div>
+                    <div id="N-YELLOW" class="lamp"></div>
+                    <div id="N-GREEN" class="lamp"></div>
+                </div>
+
+                <!-- SOUTH LIGHT -->
+                <div class="traffic-light tl-south">
+                    <div id="S-RED" class="lamp"></div>
+                    <div id="S-YELLOW" class="lamp"></div>
+                    <div id="S-GREEN" class="lamp"></div>
+                </div>
+
+                <!-- WEST LIGHT -->
+                <div class="traffic-light tl-west">
+                    <div id="W-RED" class="lamp"></div>
+                    <div id="W-YELLOW" class="lamp"></div>
+                    <div id="W-GREEN" class="lamp"></div>
+                </div>
+
+                <!-- EAST LIGHT -->
+                <div class="traffic-light tl-east">
+                    <div id="E-RED" class="lamp"></div>
+                    <div id="E-YELLOW" class="lamp"></div>
+                    <div id="E-GREEN" class="lamp"></div>
+                </div>
+            </div>
+
+            <!-- State Diagnostics -->
+            <div class="status-panel">
+                <div class="status-box">
+                    <label>Actual Hardware Signals</label>
+                    <div class="val text-actual" id="text-actual">-</div>
+                </div>
+                <div class="status-box">
+                    <label>Backend Desired Signals</label>
+                    <div class="val text-desired" id="text-desired">-</div>
+                </div>
+            </div>
+
+            <!-- Simulator Settings -->
+            <div class="simulator-box">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="auto-ack-toggle" checked />
+                    <strong>Auto-Acknowledge Hardware Commands (Simulate Working Controller)</strong>
+                </label>
+                <div class="hint-text">
+                    Uncheck to simulate hardware failure / ACK timeout (drops into DEGRADED / ALL_RED after 5s).
+                </div>
+            </div>
+        </div>
+
+        <!-- Interactive Simulation & Controls -->
+        <div>
+            <!-- Sensor Simulation Panel -->
+            <div class="card mb-24">
+                <h3>1. Sensor Simulation (Vehicle Ingestion & Clearance)</h3>
+                <div class="form-group">
+                    <label for="vehicle-type">Select Vehicle Type to Dispatch</label>
+                    <select id="vehicle-type">
+                        <option value="FORKLIFT">Forklift (Priority 5)</option>
+                        <option value="TRUCK">Heavy Delivery Truck (Priority 10)</option>
+                        <option value="EMPLOYEE_VEHICLE">Employee Vehicle (Priority 1)</option>
+                        <option value="EMERGENCY">🚨 Emergency Vehicle (Priority 1000)</option>
+                    </select>
+                </div>
+
+                <label>Add Vehicle to Direction:</label>
+                <div class="btn-row">
+                    <button id="btn-add-north">+ North</button>
+                    <button id="btn-add-south">+ South</button>
+                    <button id="btn-add-east">+ East</button>
+                    <button id="btn-add-west">+ West</button>
+                </div>
+
+                <label class="mt-12">Clear Oldest Vehicle from Direction:</label>
+                <div class="btn-row">
+                    <button class="btn-clear" id="btn-clear-north">- North</button>
+                    <button class="btn-clear" id="btn-clear-south">- South</button>
+                    <button class="btn-clear" id="btn-clear-east">- East</button>
+                    <button class="btn-clear" id="btn-clear-west">- West</button>
+                </div>
+            </div>
+
+            <!-- Manual Overrides -->
+            <div class="card mb-24">
+                <h3>2. Administrative Overrides</h3>
+                <label>Request Manual Safe GREEN (Enforces Yellow & All-Red Clearance First):</label>
+                <div class="btn-row">
+                    <button id="btn-manual-north">Force North/South</button>
+                    <button id="btn-manual-east">Force East/West</button>
+                    <button class="btn-auto col-span-2" id="btn-auto-return">Return to Automatic</button>
+                </div>
+            </div>
+
+            <!-- Audit History -->
+            <div class="card">
+                <div class="log-header">
+                    <h3>Audit Log Trail</h3>
+                    <span class="subtext">Real-time DB Events</span>
+                </div>
+                <pre id="audit-log">Loading audit history...</pre>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

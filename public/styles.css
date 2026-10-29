@@ -1,0 +1,371 @@
+:root {
+    --bg: #0f172a;
+    --card-bg: #1e293b;
+    --border: #334155;
+    --text: #f8fafc;
+    --muted: #94a3b8;
+    --red: #ef4444;
+    --yellow: #eab308;
+    --green: #22c55e;
+    --blue: #3b82f6;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    padding: 24px;
+}
+
+h1,
+h2,
+h3 {
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 16px;
+    margin-bottom: 24px;
+}
+
+.subtitle {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.header-badges {
+    display: flex;
+    gap: 8px;
+}
+
+.badge {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.badge-online {
+    background: rgba(34, 197, 94, 0.2);
+    color: var(--green);
+    border: 1px solid var(--green);
+}
+
+.badge-offline {
+    background: rgba(239, 68, 68, 0.2);
+    color: var(--red);
+    border: 1px solid var(--red);
+}
+
+.badge-mode {
+    background: rgba(59, 130, 246, 0.2);
+    color: var(--blue);
+    border: 1px solid var(--blue);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    gap: 24px;
+}
+
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.phase-indicator {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 8px;
+}
+
+.phase-indicator strong {
+    color: var(--text);
+}
+
+/* Intersection Layout */
+.intersection-container {
+    position: relative;
+    width: 320px;
+    height: 320px;
+    margin: 16px auto;
+    background: #090d16;
+    border-radius: 12px;
+    border: 2px solid var(--border);
+    overflow: hidden;
+}
+
+.road-h {
+    position: absolute;
+    top: 110px;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: #1e293b;
+    border-top: 2px dashed #475569;
+    border-bottom: 2px dashed #475569;
+}
+
+.road-v {
+    position: absolute;
+    left: 110px;
+    top: 0;
+    width: 100px;
+    height: 100%;
+    background: #1e293b;
+    border-left: 2px dashed #475569;
+    border-right: 2px dashed #475569;
+}
+
+/* Traffic Lights */
+.traffic-light {
+    position: absolute;
+    background: #020617;
+    border: 2px solid #475569;
+    border-radius: 6px;
+    padding: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    z-index: 10;
+}
+
+.lamp {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #334155;
+    opacity: 0.3;
+    transition: all 0.2s ease;
+}
+
+.lamp.active-red {
+    background: var(--red);
+    opacity: 1;
+    box-shadow: 0 0 10px var(--red);
+}
+
+.lamp.active-yellow {
+    background: var(--yellow);
+    opacity: 1;
+    box-shadow: 0 0 10px var(--yellow);
+}
+
+.lamp.active-green {
+    background: var(--green);
+    opacity: 1;
+    box-shadow: 0 0 10px var(--green);
+}
+
+.tl-north {
+    top: 12px;
+    left: 148px;
+}
+
+.tl-south {
+    bottom: 12px;
+    left: 148px;
+}
+
+.tl-west {
+    top: 124px;
+    left: 14px;
+}
+
+.tl-east {
+    top: 124px;
+    right: 14px;
+}
+
+.queue-tag {
+    position: absolute;
+    background: #020617;
+    border: 1px solid var(--border);
+    color: #38bdf8;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 4px;
+    z-index: 20;
+}
+
+.q-north {
+    top: 74px;
+    left: 135px;
+}
+
+.q-south {
+    bottom: 74px;
+    left: 135px;
+}
+
+.q-west {
+    top: 140px;
+    left: 56px;
+}
+
+.q-east {
+    top: 140px;
+    right: 56px;
+}
+
+/* Status Panel */
+.status-panel {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.status-box {
+    background: #0f172a;
+    border: 1px solid var(--border);
+    padding: 12px;
+    border-radius: 6px;
+}
+
+.status-box .val {
+    font-size: 12px;
+    font-weight: 700;
+    margin-top: 4px;
+}
+
+.text-actual {
+    color: #38bdf8;
+}
+
+.text-desired {
+    color: #a78bfa;
+}
+
+.simulator-box {
+    margin-top: 16px;
+    background: #0f172a;
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    color: var(--text);
+}
+
+.hint-text {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 4px;
+}
+
+/* Form Controls */
+.form-group {
+    margin-bottom: 16px;
+}
+
+label {
+    display: block;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 6px;
+}
+
+select,
+button,
+input {
+    font-size: 13px;
+    font-family: inherit;
+}
+
+select {
+    background: #0f172a;
+    color: var(--text);
+    border: 1px solid var(--border);
+    padding: 8px 12px;
+    border-radius: 4px;
+    width: 100%;
+    outline: none;
+}
+
+.btn-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-top: 8px;
+}
+
+button {
+    background: var(--blue);
+    color: white;
+    border: none;
+    padding: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: opacity 0.15s;
+}
+
+button:hover {
+    opacity: 0.85;
+}
+
+button.btn-clear {
+    background: #475569;
+}
+
+button.btn-auto {
+    background: #059669;
+}
+
+.col-span-2 {
+    grid-column: span 2;
+}
+
+.mb-24 {
+    margin-bottom: 24px;
+}
+
+.mt-12 {
+    margin-top: 12px;
+}
+
+/* Log Console */
+.log-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.subtext {
+    font-size: 11px;
+    color: var(--muted);
+}
+
+pre {
+    background: #020617;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 12px;
+    font-size: 11px;
+    height: 220px;
+    overflow-y: auto;
+    line-height: 1.5;
+}
